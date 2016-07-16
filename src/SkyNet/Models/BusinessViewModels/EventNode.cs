@@ -16,6 +16,7 @@ namespace SkyNet.Models.BusinessModels
         public List<Media> Medias { get; set; }
         public bool HasCost { get; set; }
         public decimal Cost { get; set; }
+        public bool IsPublic { get; set; }
 
         public DateTime CreateTime { get; set; }
 

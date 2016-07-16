@@ -10,6 +10,7 @@ namespace SkyNet.Models.BusinessModels
     {
         public int MediaId { get; set; }
         public string MediaUrl { get; set; }
+        public string MediaDescription { get; set; }
         [Required]
         public string MediaTypeName { get; set; }
         public MediaType MediaType { get; set; }

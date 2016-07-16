@@ -8,9 +8,10 @@ using SkyNet.Data;
 namespace SkyNet.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160716140939_addNodeIsPublicAttribute")]
+    partial class addNodeIsPublicAttribute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -270,8 +271,6 @@ namespace SkyNet.Data.Migrations
                     b.Property<DateTime>("CreateTime");
 
                     b.Property<int?>("EventNodeId");
-
-                    b.Property<string>("MediaDescription");
 
                     b.Property<string>("MediaTypeName")
                         .IsRequired();

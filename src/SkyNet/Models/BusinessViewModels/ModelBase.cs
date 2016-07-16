@@ -8,9 +8,7 @@ namespace SkyNet.Models.BusinessModels
 {
     interface ModelBase
     {
-        [Required]
         DateTime CreateTime { get; set; }
-        [Required]
         DateTime ModifyTime { get; set; }
     }
 }
