@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace SkyNet.Models.BusinessModels
 {
-    public class Tag : ModelBase
+    public class Media:IModelBase,IBaseId
     {
-        [Key]
-        public string TagName { get; set; }
-        public List<PublicationTag> PublicationTags { get; set; }
+        public int Id { get; set; }
+        public string MediaUrl { get; set; }
+        public string MediaDescription { get; set; }
+        [Required]
+        public string MediaTypeName { get; set; }
+        public MediaType MediaType { get; set; }
+
         public DateTime CreateTime { get; set; }
 
         public DateTime ModifyTime { get; set; }

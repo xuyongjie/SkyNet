@@ -8,7 +8,7 @@ using SkyNet.Models.BusinessModels;
 namespace SkyNet.Models
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser, ModelBase
+    public class ApplicationUser : IdentityUser, IModelBase
     {
         /// <summary>
         /// 头像

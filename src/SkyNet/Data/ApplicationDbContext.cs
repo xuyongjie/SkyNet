@@ -41,7 +41,7 @@ namespace SkyNet.Data
         }
         public override int SaveChanges()
         {
-            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is ModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as ModelBase))
+            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is IModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as IModelBase))
             {
                 history.ModifyTime = DateTime.Now;
                 if (history.CreateTime == DateTime.MinValue)
@@ -54,7 +54,7 @@ namespace SkyNet.Data
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {
-            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is ModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as ModelBase))
+            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is IModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as IModelBase))
             {
                 history.ModifyTime = DateTime.Now;
                 if (history.CreateTime == DateTime.MinValue)
@@ -67,7 +67,7 @@ namespace SkyNet.Data
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is ModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as ModelBase))
+            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is IModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as IModelBase))
             {
                 history.ModifyTime = DateTime.Now;
                 if (history.CreateTime == DateTime.MinValue)
@@ -80,7 +80,7 @@ namespace SkyNet.Data
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is ModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as ModelBase))
+            foreach (var history in this.ChangeTracker.Entries().Where(e => e.Entity is IModelBase && (e.State == EntityState.Added || e.State == EntityState.Modified)).Select(e => e.Entity as IModelBase))
             {
                 history.ModifyTime = DateTime.Now;
                 if (history.CreateTime == DateTime.MinValue)

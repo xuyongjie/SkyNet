@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace SkyNet.Models.BusinessModels
 {
-    public class EventNode:ModelBase
+    public class EventNode:IModelBase,IBaseId
     {
-        public int EventNodeId { get; set; }
+        public int Id { get; set; }
         public int EventId { get; set; }
         public Event Event { get; set; }
         public string UserId { get; set; }

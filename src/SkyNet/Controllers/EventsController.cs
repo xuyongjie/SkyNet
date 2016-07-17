@@ -35,7 +35,7 @@ namespace SkyNet.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events.SingleOrDefaultAsync(m => m.EventId == id);
+            var @event = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
                 return NotFound();
@@ -74,7 +74,7 @@ namespace SkyNet.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events.SingleOrDefaultAsync(m => m.EventId == id);
+            var @event = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace SkyNet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EventId,CreateTime,Description,ModifyTime,Title")] Event @event)
         {
-            if (id != @event.EventId)
+            if (id != @event.Id)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace SkyNet.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.EventId))
+                    if (!EventExists(@event.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace SkyNet.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events.SingleOrDefaultAsync(m => m.EventId == id);
+            var @event = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace SkyNet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @event = await _context.Events.SingleOrDefaultAsync(m => m.EventId == id);
+            var @event = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -147,7 +147,7 @@ namespace SkyNet.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.EventId == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }
