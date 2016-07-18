@@ -44,10 +44,31 @@
             @Html.DisplayNameFor(model => model.Participants)
         </dt>
         <dd>
-            @foreach(var item in Model.Participants)
+            @foreach (var item in Model.Participants)
             {
                 <div>@item.UserName</div>
             }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.EventNodes)
+        </dt>
+        <dd>
+            @foreach (var item in Model.Event.EventNodes)
+            {
+                <div>@item.Comment</div>
+                if (item.HasCost)
+                {
+                    <h2>@item.Cost</h2>
+                }
+                if (item.Medias != null && item.Medias.Count > 0)
+                {
+                    foreach (var media in item.Medias)
+                    {
+                        <h4>@media.MediaUrl</h4>
+                    }
+                }
+            }
+            <a asp-controller="EventNodes" asp-action="Create">Create a EventNode</a>
         </dd>
     </dl>
 </div>

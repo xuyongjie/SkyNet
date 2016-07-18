@@ -19,7 +19,7 @@ namespace SkyNet.Repo
 
         public IEnumerable<Event> GetEvents(string userId)
         {
-            return _dbSet.Where(ue => ue.UserId == userId).Include(ue => ue.Event).Select(ue=>ue.Event).ToList();
+            return _dbSet.Where(ue => ue.UserId == userId).Include(ue => ue.Event).Select(ue => ue.Event).ToList();
         }
 
         public IEnumerable<Event> GetOwnerEvents(string userId)
@@ -29,13 +29,13 @@ namespace SkyNet.Repo
 
         public IEnumerable<Event> GetParticipateEvents(string userId)
         {
-            return _dbSet.Where(ue => !ue.IsOwner && ue.UserId == userId).Include(ue=>ue.Event).Select(ue => ue.Event).ToList();
+            return _dbSet.Where(ue => !ue.IsOwner && ue.UserId == userId).Include(ue => ue.Event).Select(ue => ue.Event).ToList();
         }
-        
+
         public EventDTO GetEventDetail(int eventId)
         {
-            Event eve = _dbContext.Events.Include(e=>e.EventNodes).First(e => e.Id == eventId);
-            if(eve==null)
+            Event eve = _dbContext.Events.Include(e => e.EventNodes).First(e => e.Id == eventId);
+            if (eve == null)
             {
                 return null;
             }
@@ -49,16 +49,16 @@ namespace SkyNet.Repo
 
         public IEnumerable<ApplicationUser> GetParticipants(int eventId)
         {
-            return _dbSet.Where(ue =>!ue.IsOwner&&ue.EventId == eventId).Include(ue => ue.User).Select(ue => ue.User).ToList();
+            return _dbSet.Where(ue => !ue.IsOwner && ue.EventId == eventId).Include(ue => ue.User).Select(ue => ue.User).ToList();
         }
         public ApplicationUser GetOwner(int eventId)
         {
-            return _dbSet.Where(ue =>ue.IsOwner&&ue.EventId == eventId).Include(ue => ue.User).Select(ue => ue.User).FirstOrDefault();
+            return _dbSet.Where(ue => ue.IsOwner && ue.EventId == eventId).Include(ue => ue.User).Select(ue => ue.User).FirstOrDefault();
         }
 
         public decimal GetEventTotalCost(int eventId)
         {
-            Event eve = _dbContext.Events.Include(e=>e.EventNodes).First(e => e.Id == eventId);
+            Event eve = _dbContext.Events.Include(e => e.EventNodes).First(e => e.Id == eventId);
             return GetEventTotalCost(eve);
         }
         public decimal GetEventTotalCost(Event eve)
@@ -87,6 +87,27 @@ namespace SkyNet.Repo
         public bool EventExist(int eventId)
         {
             return _dbContext.Events.Any(e => e.Id == eventId);
+        }
+
+        public void AddParticipant(int eventId, IEnumerable<string> userIds)
+        {
+            foreach (var userId in userIds)
+            {
+                UserEvent ue = new UserEvent();
+                ue.EventId = eventId;
+                ue.IsOwner = false;
+                ue.UserId = userId;
+                Add(ue);
+            }
+            SavaChanges();
+        }
+
+        public void RemoveParticipant(int eventId,IEnumerable<string> userIds)
+        {
+            foreach(var userId in userIds)
+            {
+                _dbSet.Remove(_dbSet.First(ue => (ue.EventId == eventId && ue.UserId == userId)));
+            }
         }
     }
 }
