@@ -10,17 +10,17 @@ namespace SkyNet.Repo
 {
     public class Repository<T> : IRepository<T> where T :class, IBaseId
     {
-        protected DbSet<T> DbSet { get;private set; }
-        private readonly ApplicationDbContext _dbContext;
+        protected readonly DbSet<T> _dbSet;
+        protected readonly ApplicationDbContext _dbContext;
         public Repository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            DbSet = dbContext.Set<T>();
+            _dbSet = dbContext.Set<T>();
         }
 
         public T Add(T entity)
         {
-            DbSet.Add(entity);
+            _dbSet.Add(entity);
             return entity;
         }
 
@@ -29,7 +29,7 @@ namespace SkyNet.Repo
             var entity = FindById(id);
             if(entity!=null)
             {
-                DbSet.Remove(entity);
+                _dbSet.Remove(entity);
                 return true;
             }
             return false;
@@ -42,12 +42,12 @@ namespace SkyNet.Repo
 
         public IEnumerable<T> GetAll()
         {
-            return DbSet.ToList();
+            return _dbSet.ToList();
         }
 
         public T FindById(int id)
         {
-            return DbSet.Single(t => t.Id == id);
+            return _dbSet.Single(t => t.Id == id);
         }
 
         public void SavaChanges()

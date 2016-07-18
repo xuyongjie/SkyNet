@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkyNet.Repo
 {
-    interface IRepository<T> where T:class,IBaseId
+    public interface IRepository<T> where T:class,IBaseId
     {
         T Add(T entity);
         bool DeleteById(int id);

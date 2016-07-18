@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkyNet.Models.BusinessModels
 {
-    interface IModelBase
+    public interface IModelBase
     {
         DateTime CreateTime { get; set; }
         DateTime ModifyTime { get; set; }

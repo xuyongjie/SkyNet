@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using SkyNet.Data;
 
-namespace SkyNet.Data.Migrations
+namespace SkyNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160718120654_initentity")]
+    partial class initentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -182,7 +183,7 @@ namespace SkyNet.Data.Migrations
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Content");
@@ -198,7 +199,7 @@ namespace SkyNet.Data.Migrations
 
                     b.Property<string>("ToUserId");
 
-                    b.HasKey("CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FromUserId");
 
@@ -211,30 +212,30 @@ namespace SkyNet.Data.Migrations
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.Event", b =>
                 {
-                    b.Property<int>("EventId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreateTime");
 
                     b.Property<string>("Description");
 
-                    b.Property<int?>("FrontCoverMediaMediaId");
+                    b.Property<int?>("FrontCoverMediaId");
 
                     b.Property<DateTime>("ModifyTime");
 
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.HasKey("EventId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("FrontCoverMediaMediaId");
+                    b.HasIndex("FrontCoverMediaId");
 
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.EventNode", b =>
                 {
-                    b.Property<int>("EventNodeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Comment");
@@ -253,7 +254,7 @@ namespace SkyNet.Data.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("EventNodeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
@@ -264,7 +265,7 @@ namespace SkyNet.Data.Migrations
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.Media", b =>
                 {
-                    b.Property<int>("MediaId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreateTime");
@@ -280,7 +281,7 @@ namespace SkyNet.Data.Migrations
 
                     b.Property<DateTime>("ModifyTime");
 
-                    b.HasKey("MediaId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventNodeId");
 
@@ -302,7 +303,7 @@ namespace SkyNet.Data.Migrations
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.Publication", b =>
                 {
-                    b.Property<int>("PublicationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreateTime");
@@ -311,24 +312,24 @@ namespace SkyNet.Data.Migrations
 
                     b.Property<int>("EventId");
 
-                    b.Property<int?>("FrontCoverMediaMediaId");
+                    b.Property<int?>("FrontCoverMediaId");
 
                     b.Property<DateTime>("ModifyTime");
 
-                    b.Property<int?>("OriginalHtmlMediaId");
+                    b.Property<int?>("OriginalHtmlId");
 
                     b.Property<string>("Title")
                         .IsRequired();
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("PublicationId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("FrontCoverMediaMediaId");
+                    b.HasIndex("FrontCoverMediaId");
 
-                    b.HasIndex("OriginalHtmlMediaId");
+                    b.HasIndex("OriginalHtmlId");
 
                     b.HasIndex("UserId");
 
@@ -340,6 +341,8 @@ namespace SkyNet.Data.Migrations
                     b.Property<int>("PublicationId");
 
                     b.Property<string>("TagName");
+
+                    b.Property<int>("Id");
 
                     b.HasKey("PublicationId", "TagName");
 
@@ -365,7 +368,7 @@ namespace SkyNet.Data.Migrations
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.UserEvent", b =>
                 {
-                    b.Property<int>("UserEventId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreateTime");
@@ -376,9 +379,10 @@ namespace SkyNet.Data.Migrations
 
                     b.Property<DateTime>("ModifyTime");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
-                    b.HasKey("UserEventId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
@@ -445,7 +449,7 @@ namespace SkyNet.Data.Migrations
                 {
                     b.HasOne("SkyNet.Models.BusinessModels.Media", "FrontCoverMedia")
                         .WithMany()
-                        .HasForeignKey("FrontCoverMediaMediaId");
+                        .HasForeignKey("FrontCoverMediaId");
                 });
 
             modelBuilder.Entity("SkyNet.Models.BusinessModels.EventNode", b =>
@@ -481,11 +485,11 @@ namespace SkyNet.Data.Migrations
 
                     b.HasOne("SkyNet.Models.BusinessModels.Media", "FrontCoverMedia")
                         .WithMany()
-                        .HasForeignKey("FrontCoverMediaMediaId");
+                        .HasForeignKey("FrontCoverMediaId");
 
                     b.HasOne("SkyNet.Models.BusinessModels.Media", "OriginalHtml")
                         .WithMany()
-                        .HasForeignKey("OriginalHtmlMediaId");
+                        .HasForeignKey("OriginalHtmlId");
 
                     b.HasOne("SkyNet.Models.ApplicationUser", "User")
                         .WithMany()
@@ -514,7 +518,8 @@ namespace SkyNet.Data.Migrations
 
                     b.HasOne("SkyNet.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
